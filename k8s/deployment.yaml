@@ -1,0 +1,60 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: snowguard
+  labels:
+    tier: snowguard
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      tier: snowguard
+  template:
+    metadata:
+      labels:
+        tier: snowguard
+    spec:
+      serviceAccountName: snowguard
+      nodeSelector:
+        {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  tier: snowguard
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      tolerations:
+        []
+      topologySpreadConstraints:
+        []
+      restartPolicy: Always
+      containers:
+      - name: api
+        image: snowguard/snowguard:latest
+        imagePullPolicy: Always
+        workingDir: /home/snowguard
+        envFrom:
+        - configMapRef:
+            name: snowguard-env
+        - secretRef:
+            name: snowguard
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "800m"
+          limits:
+            memory: "2000Mi"
+            cpu: "1000m"
+        ports:
+        - name: api
+          containerPort: 50051
+        - name: dashboard
+          containerPort: 8088

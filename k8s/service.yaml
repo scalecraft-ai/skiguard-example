@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: snowguard
+  labels:
+    tier: snowguard
+spec:
+  clusterIP: None
+  selector:
+    tier: snowguard
+  ports:
+  - name: client
+    protocol: TCP
+    port: 50051
+    targetPort: 50051
+  - name: dashboard
+    protocol: TCP
+    port: 8088
+    targetPort: 8088

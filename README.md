@@ -10,19 +10,21 @@ This repo contains an example of how to use the Snowguard application. It also c
 4. Create a Slackbot and get the token and channel ID. [Slack API](https://api.slack.com/apps). [App manifest example](./docs/slackbot-manifest.json). (Optional)
 5. Run the Snowguard application.
 
-```bash
-docker run -it --rm \
-  -e SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT} \
-  -e SNOWFLAKE_USER=${SNOWFLAKE_USER} \
-  -e SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD} \
-  -e SNOWFLAKE_WAREHOUSE=${SNOWFLAKE_WAREHOUSE} \
-  -e SNOWFLAKE_ROLE=${SNOWFLAKE_ROLE} \
-  -e SLACK_TOKEN=${SLACK_TOKEN} \
-  -e SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID} \
-  -e SNOWGUARD_LICENSE_KEY=${SNOWGUARD_LICENSE_KEY} \
-  -p 8088:8088 \
-  scalecraft/snowguard:latest
-```
+    ```bash
+    docker run -it --rm \
+    -e SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT} \
+    -e SNOWFLAKE_USER=${SNOWFLAKE_USER} \
+    -e SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD} \
+    -e SNOWFLAKE_WAREHOUSE=${SNOWFLAKE_WAREHOUSE} \
+    -e SNOWFLAKE_ROLE=${SNOWFLAKE_ROLE} \
+    -e SLACK_TOKEN=${SLACK_TOKEN} \
+    -e SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID} \
+    -e SNOWGUARD_LICENSE_KEY=${SNOWGUARD_LICENSE_KEY} \
+    -p 8088:8088 \
+    scalecraft/snowguard:latest
+    ```
+
+6. Access the Snowguard account health dashboard at [http://localhost:8088](http://localhost:8088). The default username is `admin` and the default password is `admin`.
 
 ## Snowflake Configuration
 

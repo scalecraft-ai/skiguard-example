@@ -1,9 +1,9 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: snowguard
+  name: skiguard
   labels:
-    tier: snowguard
+    tier: skiguard
 spec:
   replicas: 1
   strategy:
@@ -13,13 +13,13 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      tier: snowguard
+      tier: skiguard
   template:
     metadata:
       labels:
-        tier: snowguard
+        tier: skiguard
     spec:
-      serviceAccountName: snowguard
+      serviceAccountName: skiguard
       nodeSelector:
         {}
       affinity:
@@ -28,7 +28,7 @@ spec:
           - podAffinityTerm:
               labelSelector:
                 matchLabels:
-                  tier: snowguard
+                  tier: skiguard
               topologyKey: kubernetes.io/hostname
             weight: 100
       tolerations:
@@ -38,14 +38,14 @@ spec:
       restartPolicy: Always
       containers:
       - name: api
-        image: snowguard/snowguard:latest
+        image: scalecraft/skiguard:latest
         imagePullPolicy: Always
-        workingDir: /home/snowguard
+        workingDir: /home/skiguard
         envFrom:
         - configMapRef:
-            name: snowguard-env
+            name: skiguard-env
         - secretRef:
-            name: snowguard
+            name: skiguard
         resources:
           requests:
             memory: "500Mi"

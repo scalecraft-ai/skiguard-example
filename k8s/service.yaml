@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: snowguard
+  name: skiguard
   labels:
-    tier: snowguard
+    tier: skiguard
 spec:
   clusterIP: None
   selector:
-    tier: snowguard
+    tier: skiguard
   ports:
   - name: client
     protocol: TCP

@@ -1,5 +1,5 @@
-kubectl create secret generic snowguard \
-  -n snowguard \
+kubectl create secret generic skiguard \
+  -n skiguard \
   --save-config \
   --from-literal=SNOWFLAKE_USER=${SNOWFLAKE_USER} \
   --from-literal=SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD} \
@@ -7,4 +7,5 @@ kubectl create secret generic snowguard \
   --from-literal=SNOWFLAKE_WAREHOUSE=${SNOWFLAKE_WAREHOUSE} \
   --from-literal=SNOWFLAKE_ROLE=${SNOWFLAKE_ROLE} \
   --from-literal=SLACK_TOKEN=${SLACK_TOKEN} \
-  --from-literal=SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}
+  --from-literal=SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID} \
+  --from-literal=SKIGUARD_LICENSE_KEY=${SKIGUARD_LICENSE_KEY}

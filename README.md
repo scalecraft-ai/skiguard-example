@@ -1,14 +1,14 @@
-# <img src="./docs/snowguard-logo.png" alt="Snowguard" width=40 class="center"/> [Snowguard](https://scalecraft.dev/snowguard)
+# <img src="./docs/skiguard-logo.png" alt="Skiguard" width=40 class="center"/> [Skiguard](https://scalecraft.dev/skiguard)
 
-This repo contains an example of how to use the Snowguard application. It also contains an example Kustomize base to deploy the application to a Kubernetes cluster.
+This repo contains an example of how to use the Skiguard application. It also contains an example Kustomize base to deploy the application to a Kubernetes cluster.
 
 ## Quick Start
 
-1. Sign up for a [Snowguard trial account](https://buy.stripe.com/00g6s58je5Xn6T6cMM). You will receive an email with your license key. No payment required for trial.
-2. Create a Snowflake user for Snowguard. [Example](./docs/snowguard-account-setup.sql) script.
+1. Sign up for a [Skiguard trial account](https://buy.stripe.com/00g6s58je5Xn6T6cMM). You will receive an email with your license key. No payment required for trial.
+2. Create a Snowflake user for Skiguard. [Example](./docs/skiguard-account-setup.sql) script.
 3. Configure your environment variables. You can use the [.env.example file](./docs/.env.example) as a template.
 4. Create a Slackbot and get the token and channel ID. [Slack API](https://api.slack.com/apps). [App manifest example](./docs/slackbot-manifest.json). (Optional)
-5. Run the Snowguard application.
+5. Run the Skiguard application.
 
     ```bash
     docker run -it --rm \
@@ -19,63 +19,63 @@ This repo contains an example of how to use the Snowguard application. It also c
     -e SNOWFLAKE_ROLE=${SNOWFLAKE_ROLE} \
     -e SLACK_TOKEN=${SLACK_TOKEN} \
     -e SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID} \
-    -e SNOWGUARD_LICENSE_KEY=${SNOWGUARD_LICENSE_KEY} \
+    -e SKIGUARD_LICENSE_KEY=${SKIGUARD_LICENSE_KEY} \
     -p 8088:8088 \
-    scalecraft/snowguard:latest
+    scalecraft/skiguard:latest
     ```
 
-6. Access the Snowguard account health dashboard at [http://localhost:8088](http://localhost:8088). The default username is `admin` and the default password is `admin`.
+6. Access the Skiguard account health dashboard at [http://localhost:8088](http://localhost:8088). The default username is `admin` and the default password is `admin`.
 
 ## Snowflake Configuration
 
-You will need to create a Snowflake user for Snowguard. The user will need the following permissions on the `SNOWFLAKE` database. You can read more about database roles in the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/account-usage#account-usage-views-by-database-role). It is also recommended to use a network policy to restrict access to the server where Snowguard is running.
+You will need to create a Snowflake user for Skiguard. The user will need the following permissions on the `SNOWFLAKE` database. You can read more about database roles in the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/account-usage#account-usage-views-by-database-role). It is also recommended to use a network policy to restrict access to the server where Skiguard is running.
   
 ```sql
-create user snowguard;
-alter user snowguard set password = '<password_here>';
-create role snowguard;
+create user skiguard;
+alter user skiguard set password = '<password_here>';
+create role skiguard;
 
-grant role snowguard to user snowguard;
-grant usage on warehouse compute_wh to role snowguard;
+grant role skiguard to user skiguard;
+grant usage on warehouse compute_wh to role skiguard;
 
 use snowflake;
 
-grant database role usage_viewer to role snowguard;
-grant database role security_viewer to role snowguard;
+grant database role usage_viewer to role skiguard;
+grant database role security_viewer to role skiguard;
 
 -- All password accounts should use a network policy to restrict access.
-create network rule snowguard_ingress
+create network rule skiguard_ingress
   mode = INGRESS
   type = IPV4
-  value_list = ('<Snowguard server IP>');
+  value_list = ('<skiguard server IP>');
 
-create network policy snowguard
-  allowed_network_rule_list = ('snowguard_ingress');
+create network policy skiguard
+  allowed_network_rule_list = ('skiguard_ingress');
 
-alter user snowguard set network_policy = snowguard;
+alter user skiguard set network_policy = skiguard;
 ```
 
 ## Slackbot Configuration
 
-You can optionally create a Slackbot to receive notifications from Snowguard. The app manifest below will create a bot with the name `snowguard`. You can use the [Snowguard logo](./docs/snowguard-logo.png) as the bot avatar.
+You can optionally create a Slackbot to receive notifications from Skiguard. The app manifest below will create a bot with the name `Skiguard`. You can use the [Skiguard logo](./docs/skiguard-logo.png) as the bot avatar.
 
 ```json
 {
     "display_information": {
-        "name": "Snowguard",
+        "name": "Skiguard",
         "description": "Snowflake security monitoring app",
         "background_color": "#0f0f0f",
-        "long_description": "Snowguard monitors Snowflake for abnormal activity and posts alerts to slack for awareness. The following Snowflake activity is monitored.\r\n\r\n* User Deletion\r\n* User Creation\r\n* Number of rows copied out of Snowflake\r\n* Number of copy actions out of Snowflake\r\n* Failed Logins\r\n* Total Logins"
+        "long_description": "Skiguard monitors Snowflake for abnormal activity and posts alerts to slack for awareness. The following Snowflake activity is monitored.\r\n\r\n* User Deletion\r\n* User Creation\r\n* Number of rows copied out of Snowflake\r\n* Number of copy actions out of Snowflake\r\n* Failed Logins\r\n* Total Logins"
     },
     "features": {
         "bot_user": {
-            "display_name": "Snowguard",
+            "display_name": "Skiguard",
             "always_online": true
         }
     },
     "oauth_config": {
         "redirect_urls": [
-            "https://slack.com/oauth/v2/authorize?scope=channels:join,chat:write&client_id=7392377040533.7393531471575"
+            "https://slack.com/oauth/v2/authorize?scope=channels:join,chat:write"
         ],
         "scopes": {
             "bot": [
@@ -94,4 +94,4 @@ You can optionally create a Slackbot to receive notifications from Snowguard. Th
 
 ## Kubernetes Deployment
 
-You can deploy the Snowguard application to a Kubernetes cluster using the Kustomize base in the [k8s directory](./k8s). You will need to create a secret with the environment variables for the Snowguard application. An example secret is provided in the [k8s directory](./k8s/secrets.sh).
+You can deploy the Skiguard application to a Kubernetes cluster using the Kustomize base in the [k8s directory](./k8s). You will need to create a secret with the environment variables for the Skiguard application. An example secret is provided in the [k8s directory](./k8s/secrets.sh).

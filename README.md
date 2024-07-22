@@ -95,3 +95,7 @@ You can optionally create a Slackbot to receive notifications from Skiguard. The
 ## Kubernetes Deployment
 
 You can deploy the Skiguard application to a Kubernetes cluster using the Kustomize base in the [k8s directory](./k8s). You will need to create a secret with the environment variables for the Skiguard application. An example secret is provided in the [k8s directory](./k8s/secrets.sh).
+
+## Docker Compose
+
+You can also run the Skiguard application using Docker Compose. An example `docker-compose.yaml` file is provided [here](./docs/docker-compose.yaml).

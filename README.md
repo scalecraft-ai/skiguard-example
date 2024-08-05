@@ -2,6 +2,8 @@
 
 This repo contains an example of how to use the Skiguard application. It also contains an example Kustomize base to deploy the application to a Kubernetes cluster.
 
+![skiguard-demo](./docs/skiguard_demo.mov)
+
 ## Quick Start
 
 1. Sign up for a [Skiguard trial account](https://buy.stripe.com/00g6s58je5Xn6T6cMM). You will receive an email with your license key. No payment required for trial.

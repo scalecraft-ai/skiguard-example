@@ -2,7 +2,7 @@
 
 This repo contains an example of how to use the Skiguard application. It also contains an example Kustomize base to deploy the application to a Kubernetes cluster.
 
-![skiguard-demo](https://youtu.be/MxtE8h8xetQ)
+[![skiguard-demo](https://img.youtube.com/vi/MxtE8h8xetQ/0.jpg)](https://www.youtube.com/watch?v=MxtE8h8xetQ)
 
 ## Quick Start
 
